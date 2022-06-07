@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
+    <link href="css/footer.css" rel="stylesheet">
+    <style>
+        html, body{
+            padding: 0px;
+            margin: 0px;
+            background:  white;
+            background-image: url("https://images.pexels.com/photos/172277/pexels-photo-172277.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+        }
+
+        .menu {
+            max-width: 100%;
+            height: auto;
+            overflow:hidden;
+            padding-top: 30pt;
+            padding-bottom: 30pt;
+        }
+        .frame{
+            float:left;
+            width: 30%;
+            height: 100%;
+            margin: 22px;
+            border: 1px solid black;
+            background: wheat;
+        }
+        .pad{
+            padding: 10pt;
+        }
+
+        a{
+            text-decoration:none;
+        }
+
+    </style>
+</head>
+
+<body>
+<heder>
+    <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Deanery</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/group/list">Home</a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" sec:authorize="hasAuthority('write')">
+                <li class="nav-item">
+                    <a class="nav-link" href="/auth/admin">ADMIN TOOLS</a>
+                </li>
+            </ul>
+
+            </ul>
+            <form class="d-flex">
+                <authorize access="isAuthenticated()">
+                    <a class="nav-link" href="/auth/login">Login</a>
+                </authorize>
+                <a class="nav-link" href="/auth/logout">logout</a>
+            </form>
+        </div>
+    </div>
+</nav>
+</heder>
+
+
+
+
+
+<!--<div style="padding-left: 0px">-->
+<!--    <img src="https://i.guim.co.uk/img/media/2a7665a240361b665beeadbbff732c1070ec6256/0_174_5315_3191/master/5315.jpg?width=465&quality=45&auto=format&fit=max&dpr=2&s=73f1ded4e833a722a6190b0923ce4afb" alt="" width="1439px" height="500px">-->
+<!--</div>-->
+
+<!--<p style="text-align: center;font-size: 25pt;background: #e9c1e4;"><b><i>Top categories</i></b></p>-->
+<div class="menu">
+    <div th:each="group: ${groupList}"  class="frame">
+            <img  th:src="${group.imageUrl}"  alt="..."   height="250" width="430" th:href="@{/student/{categoryId}(categoryId=${group.getId()})}">
+            <p class="pad" style="font-size: 18pt; text-decoration: none; color: black; align-content: center"><a  th:href="@{/student/{categoryId}(categoryId=${group.getId()})}" th:text="${group.getName()}"></a></p>
+            <b class="pad" style="font-size: 12pt">DESCRIPTION:</b> <p class="pad" th:text="${group.description}" style="font-size: 15pt"></p>
+
+    </div>
+</div>
+
+
+<footer id="sticky-footer" class="flex-shrink-0 py-4 bg-dark text-white-50" style="margin-top: 100pt">
+    <div class="container text-center">
+        <small>Copyright &copy; Your Website</small>
+    </div>
+</footer>
+
+<div>
+
+
+
+</body>
+</html>

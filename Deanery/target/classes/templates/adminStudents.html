@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:padding="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        image {
+
+        }
+
+        html, body {
+            padding: 0px;
+            margin: 0px;
+            background: white;
+            background-image: url("https://images.pexels.com/photos/172277/pexels-photo-172277.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+
+        }
+
+
+        .menu {
+            max-width: 100%;
+            height: auto;
+            overflow:hidden
+        }
+        .frame{
+            float:left;
+            width: 30%;
+            height: 30%;
+            margin: 22px;
+            border: 1px solid black;
+            background: wheat;
+        }
+        .pad{
+            padding: 10pt;
+        }
+
+        input{
+            margin: 2pt;
+            margin-left: 4pt;
+            color: wheat; background: black;
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<heder  style="background-color: black; box-shadow: white">
+    <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark" style="background: black">
+        <div class="container-fluid" >
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Deanery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/group/list">Home</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/auth/admin">ADMIN TOOLS</a>
+                    </li>
+                </ul>
+
+                </ul>
+                <form class="d-flex" action="/student/list" method="get">
+                    <input class="form-control me-2" type="text" name="name" placeholder="name" aria-label="Поиск">
+                    <input class="form-control me-2" type="text" name="surname" placeholder="surname" aria-label="Поиск">
+                    <button class="btn btn-outline-success" type="submit">Поиск</button>
+                </form>
+                <authorize access="isAuthenticated()">
+                    <a class="nav-link" href="/auth/login">Login</a>
+                </authorize>
+                <a class="nav-link" href="/auth/logout">logout</a>
+            </div>
+        </div>
+    </nav>
+</heder>
+
+
+
+<div class="menu">
+    <form th:method="GET" th:action="@{/student/add}" >
+        <input type="submit" value="Add new student" STYLE="color: wheat; background: black; margin: 10pt"/>
+    </form>
+    <div th:each="student: ${students}" class="frame" >
+
+        <img th:src=${student.imageURL}  alt="..."  width="430px" height="270">
+
+        <b th:text="${student.name}" style="font-size: 20pt" ></b>
+        <b th:text="${student.surname}" style="font-size: 20pt" ></b>
+
+         <p th:text="${student.personalInfo}" style="font-size: 13pt"></p>
+        <form th:method="POST" th:action="@{/student/delete/{id}(id = ${student.getId()})}">
+            <input type="submit" value="Delete" STYLE="color: wheat; background: black;" />
+        </form>
+        <form th:method="GET" th:action="@{/student/update/{id}(id = ${student.getId()})}">
+            <input type="submit" value="Update" STYLE="color: wheat; background: black;" />
+        </form>
+    </div>
+</div>
+
+
+
+
+<footer id="sticky-footer" class="flex-shrink-0 py-4 bg-dark text-white-50" style="margin-top: 100pt">
+    <div class="container text-center">
+        <small>Copyright &copy; Your Website</small>
+    </div>
+</footer>
+
+
+
+</body>
+</html>
